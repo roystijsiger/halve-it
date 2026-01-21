@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <title>Half-It Darts</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Game Selection Screen -->
+        <div id="gameSelectionScreen" class="screen active">
+            <h1>🎯 Darts App</h1>
+            <p class="subtitle">Kies je speltype</p>
+            
+            <div class="game-selection">
+                <button class="game-card" id="selectHalfItBtn">
+                    <div class="game-icon">🎯</div>
+                    <h2>Half-It</h2>
+                    <p>Verzamel punten in 15 rondes met speciale opdrachten</p>
+                </button>
+                
+                <button class="game-card game-card-disabled">
+                    <div class="game-icon">🔜</div>
+                    <h2>Binnenkort</h2>
+                    <p>Meer spellen komen eraan!</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="screen">
+            <div class="back-button-container">
+                <button class="btn-back" id="backToSelectionBtn">← Terug</button>
+            </div>
+            
+            <h1>🎯 Half-It Darts</h1>
+            
+            <button class="btn-rules" id="showRulesBtn">📖 Spelregels</button>
+            
+            <div class="setup-section">
+                <h2>Aantal Spelers (1-8)</h2>
+                <input type="number" id="playerCount" min="1" max="8" value="2">
+            </div>
+
+            <div class="setup-section" id="playerNamesSection">
+                <h2>Speler Namen</h2>
+                <div id="playerNameInputs"></div>
+            </div>
+
+            <div class="setup-section">
+                <h2>Moeilijkheidsgraad</h2>
+                <select id="difficulty">
+                    <option value="easy">Makkelijk - Enkele kleuren (rood/groen of wit/zwart)</option>
+                    <option value="medium">Gemiddeld - Zwart-wit combinaties</option>
+                    <option value="hard">Moeilijk - Alle kleur combinaties</option>
+                    <option value="expert">Expert - Inclusief rood-groen combinaties</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" id="startGameBtn">Start Spel</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <h2 id="currentRoundTitle">Ronde 1: 20</h2>
+                <div class="header-icons">
+                    <button class="btn-icon" id="showScoresBtn" title="Tussenstand">📊</button>
+                    <button class="btn-icon btn-close-game" id="quitGameBtn" title="Stoppen">✕</button>
+                </div>
+            </div>
+
+            <div id="specialMission" class="special-mission"></div>
+
+            <div class="current-player">
+                <div class="player-label">Aan de beurt</div>
+                <h3 id="currentPlayerName">Speler</h3>
+                <div class="score-display" id="currentPlayerScore">0</div>
+            </div>
+
+            <div class="throw-input" id="throwInput">
+                <h3>Gooi invoeren</h3>
+                
+                <!-- Drie worp vakjes -->
+                <div class="throw-display">
+                    <div class="throw-box" id="throw1" data-throw="0">
+                        <div class="throw-number">Worp 1</div>
+                        <div class="throw-value">-</div>
+                    </div>
+                    <div class="throw-box" id="throw2" data-throw="1">
+                        <div class="throw-number">Worp 2</div>
+                        <div class="throw-value">-</div>
+                    </div>
+                    <div class="throw-box" id="throw3" data-throw="2">
+                        <div class="throw-number">Worp 3</div>
+                        <div class="throw-value">-</div>
+                    </div>
+                </div>
+
+                <div class="throw-buttons">
+                    <button class="btn-throw" data-value="0">Miss</button>
+                    <button class="btn-throw" data-value="1">Single</button>
+                    <button class="btn-throw" data-value="2">Double</button>
+                    <button class="btn-throw" data-value="3">Triple</button>
+                </div>
+
+                <button class="btn-primary" id="confirmThrowsBtn" style="display: none;">Bevestig Worpen</button>
+            </div>
+
+            <div class="scoreboard">
+                <h3>Scorebord</h3>
+                <div id="playersScore"></div>
+            </div>
+
+            <div class="special-input" id="specialInput" style="display: none;">
+                <h3>Speciale Opdracht</h3>
+                <p id="specialMissionText" class="special-mission-display"></p>
+                
+                <div id="specialNumberInputs" class="special-number-inputs"></div>
+                
+                <div class="special-buttons">
+                    <button class="btn-success" id="successSpecialBtn">✅ Gelukt</button>
+                    <button class="btn-danger" id="failSpecialBtn">❌ Niet Gelukt (Halveer)</button>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="nextPlayerBtn" style="display: none;">Volgende Speler</button>
+        </div>
+
+        <!-- Score Overview Modal -->
+        <div id="scoreModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📊 Tussenstand</h2>
+                    <button class="btn-close" id="closeScoreModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="scoreOverview"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rules Modal -->
+        <div id="rulesModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📖 Spelregels Half-It</h2>
+                    <button class="btn-close" id="closeRulesBtn">✕</button>
+                </div>
+                <div class="modal-body rules-content">
+                    <h3>🎯 Doel van het spel</h3>
+                    <p>Verzamel zoveel mogelijk punten door de juiste nummers en speciale opdrachten te raken. Let op: mis je een ronde volledig, dan wordt je score gehalveerd!</p>
+                    
+                    <h3>🎲 Spelverloop</h3>
+                    <p>Het spel bestaat uit <strong>15 rondes</strong>:</p>
+                    <ul>
+                        <li><strong>Normale rondes</strong>: 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10</li>
+                        <li><strong>Speciale opdrachten</strong>: Na ronde 18, 15 en 12</li>
+                        <li><strong>Bull ronde</strong>: Laatste ronde (25 of 50 punten)</li>
+                    </ul>
+                    
+                    <h3>📊 Punten tellen</h3>
+                    <h4>Normale rondes:</h4>
+                    <ul>
+                        <li>Elke speler gooit 3 pijlen</li>
+                        <li><strong>Single</strong>: 1x het nummer (bijv. 20 = 20 punten)</li>
+                        <li><strong>Dubbel</strong>: 2x het nummer (bijv. D20 = 40 punten)</li>
+                        <li><strong>Triple</strong>: 3x het nummer (bijv. T20 = 60 punten)</li>
+                        <li>❌ <strong>Alle 3 gemist?</strong> Score wordt <strong>gehalveerd</strong>!</li>
+                    </ul>
+                    
+                    <h4>Bull ronde:</h4>
+                    <ul>
+                        <li><strong>Single bull</strong> (buitenste): 25 punten</li>
+                        <li><strong>Double bull</strong> (binnenste): 50 punten</li>
+                    </ul>
+                    
+                    <h3>⭐ Speciale opdrachten</h3>
+                    <p>Er zijn 3 speciale opdrachten tijdens het spel. De opdrachten worden <strong>moeilijker naar makkelijker</strong>:</p>
+                    <ul>
+                        <li><strong>Opdracht 1</strong>: Moeilijkste</li>
+                        <li><strong>Opdracht 2</strong>: Gemiddeld</li>
+                        <li><strong>Opdracht 3</strong>: Makkelijkste</li>
+                    </ul>
+                    
+                    <h4>Types opdrachten:</h4>
+                    <ul>
+                        <li><strong>Kleur</strong>: Minimaal 1 worp in die kleur (wit/zwart/rood/groen)</li>
+                        <li><strong>Volgorde</strong>: Alle 3 worpen in specifieke kleurvolgorde</li>
+                        <li><strong>Dubbels</strong>: Gooi 1, 2 of 3 dubbels</li>
+                        <li><strong>Triples</strong>: Gooi 1, 2 of 3 triples</li>
+                        <li><strong>Specifiek</strong>: Gooi een specifieke dubbel of triple</li>
+                    </ul>
+                    
+                    <p>✅ <strong>Gelukt?</strong> Je krijgt de som van je worpen erbij<br>
+                    ❌ <strong>Mislukt?</strong> Je score wordt <strong>gehalveerd</strong>!</p>
+                    
+                    <p><em>Voorbeeld: Opdracht "Gooi groen" - Je gooit T16 (48), D19 (38), miss (0) = 86 punten!</em></p>
+                    
+                    <h3>🏅 Moeilijkheidsgraden</h3>
+                    <ul>
+                        <li><strong>Makkelijk</strong>: Max 20→18→15 punten per opdracht</li>
+                        <li><strong>Gemiddeld</strong>: Max 35→30→25 punten per opdracht</li>
+                        <li><strong>Moeilijk</strong>: Max 50→42→35 punten per opdracht</li>
+                        <li><strong>Expert</strong>: Max 60→50→40 punten per opdracht</li>
+                    </ul>
+                    
+                    <h3>🏆 Winnaar</h3>
+                    <p>Na alle 15 rondes wint de speler met de <strong>hoogste score</strong>!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen">
+            <h1>🏆 Spel Afgelopen!</h1>
+            <div id="finalScores"></div>
+            <button class="btn-primary" id="newGameBtn">Nieuw Spel</button>
+        </div>
+    </div>
+
+    <script src="cordova.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
