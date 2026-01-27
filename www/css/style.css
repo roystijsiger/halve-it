@@ -207,6 +207,101 @@ button {
     transform: scale(1.02);
 }
 
+.btn-highscores {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.btn-highscores:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Reset Buttons */
+.btn-reset {
+    background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
+
+.btn-reset:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.5);
+    background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%);
+}
+
+/* Highscore List */
+.highscore-list {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.highscore-entry {
+    display: grid;
+    grid-template-columns: 50px 1fr 80px 100px;
+    gap: 10px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.highscore-entry.rank-1 {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.highscore-entry.rank-2 {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.3) 0%, rgba(192, 192, 192, 0.1) 100%);
+    border: 2px solid rgba(192, 192, 192, 0.5);
+}
+
+.highscore-entry.rank-3 {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.3) 0%, rgba(205, 127, 50, 0.1) 100%);
+    border: 2px solid rgba(205, 127, 50, 0.5);
+}
+
+.highscore-entry .rank {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.highscore-entry .name {
+    font-weight: 600;
+}
+
+.highscore-entry .score {
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: right;
+}
+
+.highscore-entry .date {
+    font-size: 0.85em;
+    opacity: 0.7;
+    text-align: right;
+}
+
 .btn-primary {
     background: #4CAF50;
     color: white;
@@ -334,6 +429,22 @@ button {
 }
 
 .special-mission.hidden {
+    display: none;
+}
+
+/* Normal Mission Display */
+.normal-mission {
+    background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.normal-mission.hidden {
     display: none;
 }
 
@@ -515,12 +626,202 @@ button {
 }
 
 .special-number-inputs {
+    /* Container voor special-throws-grid */
+}
+
+/* Speciale Opdracht met 3 boxes naast elkaar - zelfde stijl als normale throw-display */
+.special-throws-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     margin: 20px 0;
 }
 
+.special-throw-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.special-throw-box:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 215, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+.special-throw-label {
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.special-throw-display {
+    background: rgba(76, 175, 80, 0.2);
+    padding: 15px 8px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    border-radius: 10px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4CAF50;
+    border: 2px solid rgba(76, 175, 80, 0.4);
+}
+
+.special-throw-box:hover .special-throw-display {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: rgba(76, 175, 80, 0.6);
+}
+
+/* Next Round Preview */
+.next-round-preview {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(41, 128, 185, 0.2));
+    padding: 20px;
+    margin: 20px 0 0 0;
+    border-radius: 15px;
+    border: 2px solid rgba(52, 152, 219, 0.4);
+    text-align: center;
+}
+
+.next-round-label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.next-round-info {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ffffff;
+    background: rgba(52, 152, 219, 0.3);
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(52, 152, 219, 0.5);
+}
+
+/* Keyboard Modal */
+.keyboard-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    animation: fadeIn 0.2s ease-in;
+}
+
+.keyboard-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.keyboard-modal-content {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 15px;
+    max-width: 650px;
+    width: 95%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.keyboard-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.keyboard-modal-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.2em;
+}
+
+.keyboard-modal-body {
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Keyboard buttons - uniform size */
+.keyboard-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 8px;
+    font-size: 0.95em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard-btn:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard-btn:active {
+    transform: scale(0.98);
+}
+
+.special-keyboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+}
+
+.special-key {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 10px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.special-key:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.special-key:active {
+    transform: scale(0.95);
+    background: #4CAF50;
+}
+
+/* Old special number box styles (kept for compatibility) */
 .special-number-box {
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
@@ -834,10 +1135,69 @@ button {
     background: linear-gradient(135deg, #2196F3 0%, #0b7dda 100%);
 }
 
+/* Mission Preview Screen */
+.missions-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.mission-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.mission-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.mission-card h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.mission-text {
+    font-size: 1.1em;
+    text-align: center;
+    line-height: 1.6;
+    color: #fff;
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-bottom: 15px;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     body {
-        padding: 10px;
+        padding: 5px;
     }
 
     h1 {
@@ -885,6 +1245,32 @@ button {
     
     .throw-value {
         font-size: 1.5em;
+    }
+    
+    /* Keyboard modal aanpassingen voor mobiel */
+    .keyboard-modal-content {
+        width: 98%;
+        max-height: 95vh;
+        margin: 5px;
+    }
+    
+    .keyboard-modal-header {
+        padding: 10px 15px;
+    }
+    
+    .keyboard-modal-header h3 {
+        font-size: 1em;
+    }
+    
+    .keyboard-btn {
+        padding: 10px 5px;
+        font-size: 0.85em;
+        min-height: 40px;
+    }
+    
+    /* Zorg dat miss knop altijd zichtbaar is */
+    .keyboard-modal-body > div {
+        padding-bottom: 15px !important;
     }
     
     .special-number-inputs {
