@@ -504,14 +504,14 @@ function confirmThrows() {
     let lastResult = null;
     let allMisses = true;
     
-    // Process all throws for this player
+    // Process all throws for this player (null = miss)
     currentThrows.forEach(multiplier => {
-        if (multiplier !== null) {
-            if (multiplier > 0) {
-                allMisses = false;
-            }
-            lastResult = game.processThrow(multiplier);
+        // Behandel null als 0 (miss)
+        const throwValue = multiplier !== null ? multiplier : 0;
+        if (throwValue > 0) {
+            allMisses = false;
         }
+        lastResult = game.processThrow(throwValue);
     });
     
     // Check if player missed all throws - halve their score!
@@ -1460,11 +1460,26 @@ function selectColor(throwIndex, color, buttonsContainer) {
 
 function processSpecialResult(success) {
     const mission = game.getCurrentSpecialMission();
+    const player = game.getCurrentPlayer();
+    const oldScore = player.score;
     
-    // Get throws from window.specialThrows
+    // Bij mislukt: halveer score direct en ga door
+    if (!success) {
+        const newScore = Math.floor(oldScore / 2);
+        player.score = newScore;
+        showToast(`❌ Opdracht mislukt! Score gehalveerd: ${oldScore} → ${newScore}`, 'error');
+        
+        const result = game.nextPlayer();
+        if (result.gameOver) {
+            endGame();
+        } else {
+            updateGameScreen();
+        }
+        return;
+    }
+    
+    // Bij succes: check of alle worpen zijn ingevuld
     const throws = window.specialThrows || [null, null, null];
-    
-    // Check if all throws are filled
     if (throws.some(t => t === null)) {
         alert('❌ Vul alle 3 de worpen in!');
         return;

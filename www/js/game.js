@@ -277,15 +277,16 @@ class HalfItGame {
         switch(mission.type) {
             case 'odd':
             case 'even': {
-                // Alle worpen moeten oneven/even zijn
+                // Tel punten van alle worpen die aan de eis voldoen (oneven of even)
                 const isOdd = mission.type === 'odd';
-                success = throws.every(t => {
-                    if (t.number === 0) return false; // Miss telt niet mee
-                    return isOdd ? (t.number % 2 === 1) : (t.number % 2 === 0);
+                throws.forEach(t => {
+                    if (t.number === 0) return; // Miss telt niet mee
+                    const meetsCondition = isOdd ? (t.number % 2 === 1) : (t.number % 2 === 0);
+                    if (meetsCondition) {
+                        totalPoints += t.points;
+                    }
                 });
-                if (success) {
-                    totalPoints = throws.reduce((sum, t) => sum + t.points, 0);
-                }
+                success = totalPoints > 0; // Minimaal 1 goede worp
                 break;
             }
 
@@ -393,6 +394,8 @@ class HalfItGame {
                 totalPoints = 0;
         }
 
+        // Bij succes: geef de som van de gegooide punten
+        // Bij falen: geef 0 punten (score wordt gehalveerd in processSpecialMission)
         return { success, points: totalPoints };
     }
 
